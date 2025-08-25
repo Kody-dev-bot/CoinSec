@@ -10,3 +10,6 @@ spring:
       jedis:
         pool:
           max-active: 8
+
+mybatis-plus:
+  mapper-locations: classpath*:xml/*Xml.xml
