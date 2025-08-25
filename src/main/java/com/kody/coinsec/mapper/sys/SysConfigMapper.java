@@ -1,7 +1,7 @@
-package com.kody.coinsec.mapper;
+package com.kody.coinsec.mapper.sys;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.kody.coinsec.entity.SysConfig;
+import com.kody.coinsec.entity.sys.SysConfig;
 
 /**
  * <p>

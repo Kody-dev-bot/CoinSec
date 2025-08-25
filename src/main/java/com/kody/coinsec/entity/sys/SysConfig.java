@@ -1,4 +1,4 @@
-package com.kody.coinsec.entity;
+package com.kody.coinsec.entity.sys;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -25,24 +25,24 @@ import lombok.experimental.Accessors;
 @TableName("sys_config")
 public class SysConfig {
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+	@TableId(value = "id", type = IdType.AUTO)
+	private Long id;
 
-    /**
-     * 配置键
-     */
-    @TableField("config_key")
-    private String configKey;
+	/**
+	 * 配置键
+	 */
+	@TableField("config_key")
+	private String configKey;
 
-    /**
-     * 配置值
-     */
-    @TableField("config_value")
-    private String configValue;
+	/**
+	 * 配置值
+	 */
+	@TableField("config_value")
+	private String configValue;
 
-    /**
-     * 备注
-     */
-    @TableField("remark")
-    private String remark;
+	/**
+	 * 备注
+	 */
+	@TableField("remark")
+	private String remark;
 }

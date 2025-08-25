@@ -1,6 +1,6 @@
-package com.kody.coinsec.service;
+package com.kody.coinsec.service.sys;
 
-import com.kody.coinsec.entity.SysConfig;
+import com.kody.coinsec.entity.sys.SysConfig;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
