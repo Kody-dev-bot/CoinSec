@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: CoinSec
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+  data:
+    redis:
+      jedis:
+        pool:
+          max-active: 8
