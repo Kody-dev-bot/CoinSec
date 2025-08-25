@@ -1,7 +1,7 @@
-package com.kody.coinsec.service.sys;
+package com.kody.coinsec.sys.service;
 
-import com.kody.coinsec.entity.sys.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.kody.coinsec.sys.entity.SysUser;
 
 /**
  * <p>

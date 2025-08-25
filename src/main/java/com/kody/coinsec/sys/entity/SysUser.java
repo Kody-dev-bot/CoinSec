@@ -1,4 +1,4 @@
-package com.kody.coinsec.entity.sys;
+package com.kody.coinsec.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

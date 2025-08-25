@@ -1,9 +1,9 @@
-package com.kody.coinsec.service.impl.sys;
+package com.kody.coinsec.sys.service.impl;
 
-import com.kody.coinsec.entity.sys.SysUser;
-import com.kody.coinsec.mapper.sys.SysUserMapper;
-import com.kody.coinsec.service.sys.SysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.kody.coinsec.sys.entity.SysUser;
+import com.kody.coinsec.sys.mapper.SysUserMapper;
+import com.kody.coinsec.sys.service.SysUserService;
 import org.springframework.stereotype.Service;
 
 /**

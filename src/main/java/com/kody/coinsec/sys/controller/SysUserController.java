@@ -1,4 +1,4 @@
-package com.kody.coinsec.controller.sys;
+package com.kody.coinsec.sys.controller;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
