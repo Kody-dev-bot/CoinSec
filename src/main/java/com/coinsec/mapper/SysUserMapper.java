@@ -13,4 +13,12 @@ import com.coinsec.entity.SysUser;
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
+	/**
+	 * 根据用户和角色查询用户数量
+	 *
+	 * @param userName 用户名
+	 * @param role     角色
+	 * @return 用户数量
+	 */
+	int countByUserNameAndRole(String userName, String role);
 }
