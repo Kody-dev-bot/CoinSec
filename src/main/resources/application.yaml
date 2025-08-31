@@ -6,3 +6,10 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath*:xml/*Xml.xml
+
+sa-token:
+  token-name: coin-sec-token
+  active-timeout: -1
+  is-concurrent: true
+  is-share: false
+  token-style: uuid
