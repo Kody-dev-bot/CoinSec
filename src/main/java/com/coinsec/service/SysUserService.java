@@ -21,4 +21,14 @@ public interface SysUserService extends IService<SysUser> {
 	 * @return 存在返回true，不存在返回false
 	 */
 	boolean existsAdmin(String userName, String role);
+
+	/**
+	 *
+	 * 注册用户
+	 *
+	 * @param userName 用户名
+	 * @param email    邮箱
+	 * @return 注册结果
+	 */
+	boolean registerUser(String userName, String email);
 }
