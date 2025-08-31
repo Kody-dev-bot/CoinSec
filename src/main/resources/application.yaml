@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: CoinSec
+  profiles:
+    active: dev
+
+mybatis-plus:
+  mapper-locations: classpath*:xml/*Xml.xml
