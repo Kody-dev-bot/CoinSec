@@ -28,7 +28,15 @@ public interface SysUserService extends IService<SysUser> {
 	 *
 	 * @param userName 用户名
 	 * @param email    邮箱
-	 * @return 注册结果
 	 */
-	boolean registerUser(String userName, String email);
+	void registerUser(String userName, String email);
+
+	/**
+	 * 登录用户
+	 *
+	 * @param userName 用户名
+	 * @param password 密码
+	 * @return 用户信息
+	 */
+	SysUser loginUser(String userName, String password);
 }

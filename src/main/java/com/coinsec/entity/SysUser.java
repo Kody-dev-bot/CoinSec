@@ -47,6 +47,12 @@ public class SysUser {
 	private String password;
 
 	/**
+	 * 邮箱
+	 */
+	@TableField("email")
+	private String email;
+
+	/**
 	 * 账号状态：1=正常，0=禁用
 	 */
 	@TableField("status")

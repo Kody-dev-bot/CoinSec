@@ -33,11 +33,6 @@ public class EmailService {
 	@Value("${spring.mail.username}")
 	private String fromEmail;
 
-	/**
-	 * 接收者
-	 */
-	@Value("${admin.init.receive-email}")
-	private String adminEmail;
 
 	/**
 	 * 构造方法
@@ -55,7 +50,7 @@ public class EmailService {
 	 * @param username 用户名
 	 * @param password 密码
 	 */
-	public void sendAdminInfo(String username, String password) {
+	public void sendAdminInfo(String username, String password, String adminEmail) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom(fromEmail);
 		log.info("发送管理员邮件：{}", fromEmail);

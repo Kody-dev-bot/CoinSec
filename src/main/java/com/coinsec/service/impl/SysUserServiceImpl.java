@@ -8,7 +8,6 @@ import com.coinsec.mapper.SysUserMapper;
 import com.coinsec.service.SysUserService;
 import com.coinsec.utils.RandomPassword;
 import jakarta.annotation.Resource;
-import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @since 2025-08-31
  */
 @Log4j2
-@Getter
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
@@ -66,11 +64,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 	 *
 	 * @param userName 用户名
 	 * @param email    邮箱
-	 * @return 注册结果
 	 */
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public boolean registerUser(String userName, String email) {
+	public void registerUser(String userName, String email) {
 		LambdaQueryWrapper<SysUser> query = new LambdaQueryWrapper<SysUser>()
 				.eq(SysUser::getUserName, userName)
 				.last("LIMIT 1");
@@ -84,15 +81,37 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		SysUser sysUser = SysUser.builder()
 				.userName(userName)
 				.password(randomPassword.encodePassword(password))
+				.email(email)
 				.build();
 
 		if (save(sysUser)) {
 			emailService.sendUserInfo(userName, password, email);
 			log.info("用户注册成功，用户名: {}", userName);
-			return true;
 		} else {
 			log.error("用户注册失败, 用户名: {}", userName);
 			throw new SysException("用户信息保存失败，请稍后重试");
+		}
+	}
+
+	/**
+	 * 登录用户
+	 *
+	 * @param userName 用户名
+	 * @param password 密码
+	 * @return 用户信息
+	 */
+	@Override
+	public SysUser loginUser(String userName, String password) {
+		LambdaQueryWrapper<SysUser> query = new LambdaQueryWrapper<SysUser>()
+				.eq(SysUser::getUserName, userName)
+				.eq(SysUser::getPassword, password);
+		SysUser sysUserInfo = getOne(query);
+		if (sysUserInfo != null) {
+			log.info("用户{}登录成功", userName);
+			return sysUserInfo;
+		} else {
+			log.error("用户{}登录失败", userName);
+			throw new SysException("用户名或密码错误");
 		}
 	}
 

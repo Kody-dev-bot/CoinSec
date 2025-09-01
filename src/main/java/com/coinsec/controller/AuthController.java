@@ -1,6 +1,10 @@
 package com.coinsec.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
+import com.coinsec.dto.request.LoginDTO;
 import com.coinsec.dto.request.RegisterDTO;
+import com.coinsec.dto.response.UserInfoDTO;
+import com.coinsec.entity.SysUser;
 import com.coinsec.exception.SysException;
 import com.coinsec.response.Result;
 import com.coinsec.service.SysUserService;
@@ -49,8 +53,7 @@ public class AuthController {
 	 * @return 注册结果
 	 */
 	@PostMapping("/register")
-	public Result<?> register(
-			@Valid @RequestBody RegisterDTO registerDTO) {
+	public Result<?> register(@Valid @RequestBody RegisterDTO registerDTO) {
 		log.info("用户注册请求，参数：{}", registerDTO.getUserName());
 		try {
 			sysUserService.registerUser(registerDTO.getUserName(), registerDTO.getEmail());
@@ -58,6 +61,39 @@ public class AuthController {
 			return Result.success("注册成功，初始密码已发送至邮箱");
 		} catch (SysException e) {
 			log.error("用户注册失败，用户名：{}，错误：{}", registerDTO.getUserName(), e.getMessage());
+			return Result.failed(e.getMessage());
+		}
+	}
+
+	/**
+	 * 登录
+	 *
+	 * @param loginDTO 登录信息
+	 * @return 登录结果
+	 */
+	@PostMapping("/login")
+	public Result<?> login(@Valid @RequestBody LoginDTO loginDTO) {
+		log.info("用户登录请求，参数：{}", loginDTO.getUserName());
+		try {
+			SysUser userInfo = sysUserService.loginUser(loginDTO.getUserName(), loginDTO.getPassword());
+			if (userInfo != null) {
+				StpUtil.login(userInfo.getId());
+
+				log.info("用户登录成功，用户名：{}", loginDTO.getUserName());
+				UserInfoDTO userInfoDTO = UserInfoDTO.builder()
+						.userName(userInfo.getUserName())
+						.role(userInfo.getRole())
+						.email(userInfo.getEmail())
+						.tokenName(StpUtil.getTokenName())
+						.tokenValue(StpUtil.getTokenValue())
+						.build();
+				return Result.success("登录成功", userInfoDTO);
+			} else {
+				log.error("用户登录失败，用户名：{}，错误：用户不存在", loginDTO.getUserName());
+				return Result.failed("用户不存在");
+			}
+		} catch (SysException e) {
+			log.error("用户登录失败，用户名：{}，错误：{}", loginDTO.getUserName(), e.getMessage());
 			return Result.failed(e.getMessage());
 		}
 	}

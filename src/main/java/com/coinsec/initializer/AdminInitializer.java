@@ -7,6 +7,7 @@ import com.coinsec.utils.RandomPassword;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -42,6 +43,12 @@ public class AdminInitializer implements ApplicationRunner {
 	private final EmailService emailService;
 
 	/**
+	 * 接收者
+	 */
+	@Value("${admin.init.receive-email}")
+	private String adminEmail;
+
+	/**
 	 * 构造方法
 	 *
 	 * @param sysUserService 用户服务
@@ -71,10 +78,11 @@ public class AdminInitializer implements ApplicationRunner {
 					.userName(ADMIN_USERNAME)
 					.role(ADMIN_ROLE)
 					.password(encodePassword)
+					.email(adminEmail)
 					.build();
 			if (sysUserService.save(sysUser)) {
 				log.info("管理员账号初始化成功");
-				emailService.sendAdminInfo(ADMIN_USERNAME, password);
+				emailService.sendAdminInfo(ADMIN_USERNAME, password, adminEmail);
 			}
 		} else {
 			log.info("管理员账号已存在");

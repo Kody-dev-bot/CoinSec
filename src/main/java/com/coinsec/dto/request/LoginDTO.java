@@ -1,0 +1,22 @@
+package com.coinsec.dto.request;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+/**
+ * <p>
+ * 登录参数
+ * </p>
+ *
+ * @author kody
+ * @since 2025-09-01
+ */
+@Data
+public class LoginDTO {
+
+	@NotBlank(message = "用户名不能为空")
+	private String userName;
+
+	@NotBlank(message = "密码不能为空")
+	private String password;
+}
