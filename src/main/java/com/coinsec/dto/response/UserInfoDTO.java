@@ -36,4 +36,9 @@ public class UserInfoDTO {
 	 */
 	private String tokenValue;
 
+	/**
+	 * 是否首次登录
+	 */
+	private boolean isFirstLogin;
+
 }

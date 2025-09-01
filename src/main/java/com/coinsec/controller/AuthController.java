@@ -9,13 +9,12 @@ import com.coinsec.exception.SysException;
 import com.coinsec.response.Result;
 import com.coinsec.service.SysUserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 /**
  * <p>
@@ -86,6 +85,7 @@ public class AuthController {
 						.email(userInfo.getEmail())
 						.tokenName(StpUtil.getTokenName())
 						.tokenValue(StpUtil.getTokenValue())
+						.isFirstLogin(userInfo.getIsFirstLogin() == 1)
 						.build();
 				return Result.success("登录成功", userInfoDTO);
 			} else {
@@ -94,6 +94,46 @@ public class AuthController {
 			}
 		} catch (SysException e) {
 			log.error("用户登录失败，用户名：{}，错误：{}", loginDTO.getUserName(), e.getMessage());
+			return Result.failed(e.getMessage());
+		}
+	}
+
+	/**
+	 * 修改密码
+	 *
+	 * @param newPassword 新密码
+	 * @return 修改密码结果
+	 */
+	@PostMapping("/update-password")
+	public Result<?> updatePassword(@NotBlank(message = "新密码不能为空") @RequestParam String newPassword) {
+		try {
+			// 验证登录状态
+			StpUtil.checkLogin();
+			Long userId = StpUtil.getLoginIdAsLong();
+			sysUserService.updatePassword(userId, newPassword);
+			return Result.success("密码修改成功");
+		} catch (SysException e) {
+			log.error("修改密码失败：{}", e.getMessage());
+			return Result.failed(e.getMessage());
+		}
+	}
+
+	/**
+	 * 登出
+	 *
+	 * @return 登出结果
+	 */
+	@PostMapping("/logout")
+	public Result<?> logout() {
+		try {
+			StpUtil.checkLogin();
+			Long userId = StpUtil.getLoginIdAsLong();
+			String userName = sysUserService.getById(userId).getUserName();
+			StpUtil.logout();
+			log.info("用户{}登出成功", userName);
+			return Result.success("登出成功");
+		} catch (SysException e) {
+			log.error("用户登出失败：{}", e.getMessage());
 			return Result.failed(e.getMessage());
 		}
 	}

@@ -81,4 +81,10 @@ public class SysUser {
 	 */
 	@TableField("update_time")
 	private LocalDateTime updateTime;
+
+	/**
+	 * 是否首次登录：1=是，0=否
+	 */
+	@TableField("is_first_login")
+	private Byte isFirstLogin;
 }

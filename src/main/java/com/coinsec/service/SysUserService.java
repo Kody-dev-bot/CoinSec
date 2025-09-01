@@ -39,4 +39,12 @@ public interface SysUserService extends IService<SysUser> {
 	 * @return 用户信息
 	 */
 	SysUser loginUser(String userName, String password);
+
+	/**
+	 * 修改密码
+	 *
+	 * @param id          用户id
+	 * @param newPassword 新密码
+	 */
+	void updatePassword(Long id, String newPassword);
 }

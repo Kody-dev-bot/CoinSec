@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 /**
  * <p>
  * 系统用户表，存储用户登录及基本信息 服务实现类
@@ -108,10 +110,35 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 		SysUser sysUserInfo = getOne(query);
 		if (sysUserInfo != null) {
 			log.info("用户{}登录成功", userName);
+			sysUserInfo.setLastLoginTime(LocalDateTime.now());
+			updateById(sysUserInfo);
 			return sysUserInfo;
 		} else {
 			log.error("用户{}登录失败", userName);
 			throw new SysException("用户名或密码错误");
+		}
+	}
+
+	/**
+	 * 修改密码
+	 *
+	 * @param id          用户id
+	 * @param newPassword 新密码
+	 */
+	@Override
+	public void updatePassword(Long id, String newPassword) {
+		if (getById(id) == null) {
+			throw new SysException("用户不存在");
+		}
+
+		SysUser sysUser = SysUser.builder()
+				.id(id)
+				.password(newPassword)
+				.isFirstLogin((byte) 0)
+				.updateTime(LocalDateTime.now())
+				.build();
+		if (!updateById(sysUser)) {
+			throw new SysException("密码修改失败");
 		}
 	}
 
