@@ -16,6 +16,10 @@ import lombok.Data;
 public class UserInfoDTO {
 
 	/**
+	 * 用户id
+	 */
+	private Long id;
+	/**
 	 * 用户名
 	 */
 	private String userName;

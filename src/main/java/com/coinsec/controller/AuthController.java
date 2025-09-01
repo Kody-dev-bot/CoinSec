@@ -80,6 +80,7 @@ public class AuthController {
 
 				log.info("用户登录成功，用户名：{}", loginDTO.getUserName());
 				UserInfoDTO userInfoDTO = UserInfoDTO.builder()
+						.id(userInfo.getId())
 						.userName(userInfo.getUserName())
 						.role(userInfo.getRole())
 						.email(userInfo.getEmail())
@@ -105,11 +106,13 @@ public class AuthController {
 	 * @return 修改密码结果
 	 */
 	@PostMapping("/update-password")
-	public Result<?> updatePassword(@NotBlank(message = "新密码不能为空") @RequestParam String newPassword) {
+	public Result<?> updatePassword(
+			@NotBlank(message = "用户ID不能为空") @RequestParam Long userId,
+			@NotBlank(message = "新密码不能为空") @RequestParam String newPassword) {
+		log.info("修改密码请求，用户ID：{}，新密码：{}", userId, newPassword);
 		try {
 			// 验证登录状态
 			StpUtil.checkLogin();
-			Long userId = StpUtil.getLoginIdAsLong();
 			sysUserService.updatePassword(userId, newPassword);
 			return Result.success("密码修改成功");
 		} catch (SysException e) {

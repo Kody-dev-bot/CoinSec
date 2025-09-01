@@ -2,6 +2,7 @@ package com.coinsec.utils;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.crypto.digest.Digester;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
@@ -15,6 +16,7 @@ import java.util.Random;
  * @author kody
  * @since 2025-08-31
  */
+@Log4j2
 @Component
 public class RandomPassword {
 
@@ -79,6 +81,7 @@ public class RandomPassword {
 	 */
 	public String encodePassword(String password) {
 		Digester digester = DigestUtil.digester("sm3");
+		log.info("加密前: {}, 加密后: {}", password, digester);
 		return digester.digestHex(password);
 	}
 

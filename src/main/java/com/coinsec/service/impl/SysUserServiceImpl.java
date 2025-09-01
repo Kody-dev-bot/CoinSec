@@ -137,8 +137,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 				.isFirstLogin((byte) 0)
 				.updateTime(LocalDateTime.now())
 				.build();
-		if (!updateById(sysUser)) {
-			throw new SysException("密码修改失败");
+		if (updateById(sysUser)) {
+			log.info("用户{}修改密码成功", id);
+		} else {
+			log.error("用户{}修改密码失败", id);
+			throw new SysException("修改密码失败，请稍后重试");
 		}
 	}
 

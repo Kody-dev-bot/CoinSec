@@ -19,6 +19,7 @@ import java.util.List;
 @Log4j2
 @Component
 public class StpInterfaceImpl implements StpInterface {
+	
 	/**
 	 * 返回指定账号id所拥有的权限码集合
 	 *

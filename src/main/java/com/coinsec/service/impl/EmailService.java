@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -71,7 +70,6 @@ public class EmailService {
 	 * @param password     密码
 	 * @param receiveEmail 接收者
 	 */
-	@Async
 	public void sendUserInfo(String username, String password, String receiveEmail) {
 		try {
 			SimpleMailMessage message = new SimpleMailMessage();
@@ -79,11 +77,12 @@ public class EmailService {
 			log.info("发送邮件：{}", fromEmail);
 			message.setTo(receiveEmail);
 			log.info("发送邮件给：{}", receiveEmail);
-			message.setSubject("系统初始化 - 用户账号信息");
+			message.setSubject("CoinSec系统 - 用户账号信息");
 			message.setText("系统首次启动，自动生成用户账号：\n" +
 					"用户名：" + username + "\n" +
 					"初始密码：" + password + "\n" +
 					"请登录后及时修改密码以保证安全！");
+			mailSender.send(message);
 		} catch (Exception e) {
 			log.error("发送邮件失败：{}", e.getMessage());
 		}

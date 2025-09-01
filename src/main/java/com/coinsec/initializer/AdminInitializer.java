@@ -79,7 +79,6 @@ public class AdminInitializer implements ApplicationRunner {
 					.role(ADMIN_ROLE)
 					.password(encodePassword)
 					.email(adminEmail)
-					.isFirstLogin((byte) 1)
 					.build();
 			if (sysUserService.save(sysUser)) {
 				log.info("管理员账号初始化成功");

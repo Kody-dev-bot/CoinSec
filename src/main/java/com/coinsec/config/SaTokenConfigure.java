@@ -3,9 +3,6 @@ package com.coinsec.config;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
-import com.coinsec.entity.SysUser;
-import com.coinsec.exception.SysException;
-import com.coinsec.service.SysUserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -24,23 +21,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SaTokenConfigure implements WebMvcConfigurer {
 
 	/**
-	 * 用户服务
-	 */
-	private final SysUserService sysUserService;
-
-	/**
-	 * <p>
-	 * 构造函数
-	 * </p>
-	 *
-	 * @param sysUserService 用户服务
-	 */
-	public SaTokenConfigure(SysUserService sysUserService) {
-		this.sysUserService = sysUserService;
-	}
-
-
-	/**
 	 * <p>
 	 * 添加 Sa-Token 拦截器
 	 * </p>
@@ -52,14 +32,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 		registry.addInterceptor(new SaInterceptor(h -> {
 			log.info("Sa-Token 拦截器");
 			SaRouter.match("/**").notMatch("/sys/login", "/sys/register")
-					.check(r -> {
-						StpUtil.checkLogin();
-						Long userId = StpUtil.getLoginIdAsLong();
-						SysUser user = sysUserService.getById(userId);
-						if (user.getIsFirstLogin() == 1) {
-							throw new SysException("请先修改初始密码");
-						}
-					});
+					.check(r -> StpUtil.checkLogin());
 
 			// 管理员权限
 			SaRouter.match("/sys/admin/**", r -> StpUtil.checkRole("ADMIN"));
