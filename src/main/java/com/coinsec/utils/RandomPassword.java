@@ -2,6 +2,7 @@ package com.coinsec.utils;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.crypto.digest.Digester;
+import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
 import java.util.Random;
@@ -14,6 +15,7 @@ import java.util.Random;
  * @author kody
  * @since 2025-08-31
  */
+@Component
 public class RandomPassword {
 
 	/**

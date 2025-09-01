@@ -14,7 +14,9 @@ public enum ResultEnum implements IResult {
 	PARAM_VALID_ERROR(400, "参数校验失败"),
 	FORBIDDEN(403, "没有权限访问资源"),
 	NOT_LOGIN(401, "未登录"),
-	COMMON_FAILED(500, "接口调用失败");
+	COMMON_FAILED(500, "接口调用失败"),
+
+	SYS_ERROR(600, "Sys系统异常");
 
 	// 状态码
 	private final Integer code;

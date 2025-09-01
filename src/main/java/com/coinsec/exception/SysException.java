@@ -1,7 +1,10 @@
 package com.coinsec.exception;
 
-import lombok.Getter;
+import com.coinsec.response.IResult;
+import com.coinsec.response.ResultEnum;
 import lombok.extern.log4j.Log4j2;
+
+import static io.lettuce.core.pubsub.PubSubOutput.Type.message;
 
 /**
  * <p>
@@ -11,14 +14,13 @@ import lombok.extern.log4j.Log4j2;
  * @author kody
  * @since 2025-08-31
  */
-@Getter
 @Log4j2
-public class SysException extends RuntimeException {
+public class SysException extends RuntimeException implements IResult {
 
 	/**
 	 * 错误码
 	 */
-	private Integer code = 500;
+	private Integer code = ResultEnum.SYS_ERROR.getCode();
 
 	/**
 	 * 构造方法
@@ -28,11 +30,12 @@ public class SysException extends RuntimeException {
 	public SysException(String message) {
 		super(message);
 		log.error("SysException: {}", message);
+
 	}
 
-	public SysException(Integer code, String message) {
-		super(message);
-		this.code = code;
+	public SysException(ResultEnum resultEnum) {
+		super(resultEnum.getMessage());
+		this.code = resultEnum.getCode();
 		log.error("SysException: {}, code: {}", message, code);
 	}
 
@@ -47,4 +50,13 @@ public class SysException extends RuntimeException {
 		log.error("SysException: {}, cause: {}", message, cause);
 	}
 
+	/**
+	 * 获取状态码
+	 *
+	 * @return 状态码
+	 */
+	@Override
+	public Integer getCode() {
+		return code;
+	}
 }

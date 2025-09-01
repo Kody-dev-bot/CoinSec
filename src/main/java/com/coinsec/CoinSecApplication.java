@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * <p>
@@ -15,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2025-08-31
  */
 @Log4j2
+@EnableAsync
 @SpringBootApplication
 @MapperScan("com.coinsec.mapper")
 public class CoinSecApplication {

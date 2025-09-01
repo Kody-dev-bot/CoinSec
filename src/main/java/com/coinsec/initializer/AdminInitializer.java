@@ -67,11 +67,11 @@ public class AdminInitializer implements ApplicationRunner {
 			RandomPassword randomPassword = new RandomPassword();
 			String password = randomPassword.generatePassword();
 			String encodePassword = randomPassword.encodePassword(password);
-			SysUser sysUser = new SysUser();
-			sysUser
-					.setUserName(ADMIN_USERNAME)
-					.setRole(ADMIN_ROLE)
-					.setPassword(encodePassword);
+			SysUser sysUser = SysUser.builder()
+					.userName(ADMIN_USERNAME)
+					.role(ADMIN_ROLE)
+					.password(encodePassword)
+					.build();
 			if (sysUserService.save(sysUser)) {
 				log.info("管理员账号初始化成功");
 				emailService.sendAdminInfo(ADMIN_USERNAME, password);
