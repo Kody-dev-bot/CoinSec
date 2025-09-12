@@ -7,6 +7,7 @@ import com.coinsec.auth.mapper.UserMapper;
 import com.coinsec.auth.service.UserService;
 import com.coinsec.common.exception.BusinessException;
 import com.coinsec.common.result.ResultCode;
+import com.coinsec.common.util.Encryption;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +33,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 	@Override
 	public User login(String userName, String password) {
 		try {
-			log.info("用户名：{}", userName);
+			log.info("登录用户名：{}", userName);
+			String encodePassword = Encryption.encodePassword(password);
 			LambdaQueryWrapper<User> query = new LambdaQueryWrapper<>();
-			query.eq(User::getUserName, userName).eq(User::getPassword, password);
+			query.eq(User::getUserName, userName).eq(User::getPassword, encodePassword);
 			return this.getOne(query);
 		} catch (Exception e) {
 			log.error("登录异常：{}", e.getMessage());
 			throw new BusinessException(ResultCode.SYSTEM_ERROR);
 		}
 	}
+
 }
