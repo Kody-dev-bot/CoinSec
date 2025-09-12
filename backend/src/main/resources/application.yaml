@@ -1,3 +1,14 @@
 spring:
   application:
     name: Coinsec
+  profiles:
+    active: dev
+
+mybatis-plus:
+  mapper-locations: classpath*:xml/*Xml.xml
+
+sa-token:
+  token-name: coinsec-token
+  token-style: uuid
+  is-concurrent: true
+  is-share: false
