@@ -1,7 +1,7 @@
 package com.coinsec.auth.service;
 
-import com.coinsec.auth.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.coinsec.auth.entity.User;
 
 /**
  * <p>
@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
+	/**
+	 * 登录
+	 *
+	 * @param userName 用户名
+	 * @param password 密码
+	 * @return 登录用户
+	 */
+	User login(String userName, String password);
 }

@@ -1,9 +1,13 @@
 package com.coinsec.auth.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.coinsec.auth.entity.User;
 import com.coinsec.auth.mapper.UserMapper;
 import com.coinsec.auth.service.UserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.coinsec.common.exception.BusinessException;
+import com.coinsec.common.result.ResultCode;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +18,27 @@ import org.springframework.stereotype.Service;
  * @author kody
  * @since 2025-09-12
  */
+@Log4j2
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+	/**
+	 * 登录
+	 *
+	 * @param userName 用户名
+	 * @param password 密码
+	 * @return 登录用户
+	 */
+	@Override
+	public User login(String userName, String password) {
+		try {
+			log.info("用户名：{}", userName);
+			LambdaQueryWrapper<User> query = new LambdaQueryWrapper<>();
+			query.eq(User::getUserName, userName).eq(User::getPassword, password);
+			return this.getOne(query);
+		} catch (Exception e) {
+			log.error("登录异常：{}", e.getMessage());
+			throw new BusinessException(ResultCode.SYSTEM_ERROR);
+		}
+	}
 }
