@@ -22,5 +22,12 @@ public interface UserService extends IService<User> {
 	 */
 	User login(String userName, String password);
 
-
+	/**
+	 * 注册
+	 *
+	 * @param userName 用户名
+	 * @param password 密码
+	 * @return 是否注册成功
+	 */
+	boolean register(String userName, String password);
 }

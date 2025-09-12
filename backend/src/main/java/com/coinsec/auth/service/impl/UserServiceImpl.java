@@ -44,4 +44,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 		}
 	}
 
+	/**
+	 * 注册
+	 *
+	 * @param userName 用户名
+	 * @param password 密码
+	 * @return 是否注册成功
+	 */
+	@Override
+	public boolean register(String userName, String password) {
+		try {
+			log.info("注册用户名：{}", userName);
+			String encodePassword = Encryption.encodePassword(password);
+			User user = User.builder().userName(userName).password(encodePassword).build();
+			return this.save(user);
+		} catch (Exception e) {
+			log.error("注册异常：{}", e.getMessage());
+			throw new BusinessException(ResultCode.SYSTEM_ERROR);
+		}
+	}
+
 }

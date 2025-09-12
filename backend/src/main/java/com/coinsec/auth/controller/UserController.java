@@ -66,7 +66,27 @@ public class UserController {
 			return Result.success(response);
 		} catch (Exception e) {
 			log.error("登录失败：{}", e.getMessage());
-			return Result.fail(ResultCode.INTERNAL_ERROR);
+			throw e;
+		}
+	}
+
+	/**
+	 * 注册
+	 *
+	 * @param request 注册请求
+	 * @return 注册结果
+	 */
+	@PostMapping("/register")
+	public Result<Void> register(@RequestBody LoginRequest request) {
+		try {
+			if (userService.register(request.getUserName(), request.getPassword())) {
+				return Result.success();
+			} else {
+				return Result.fail(ResultCode.INTERNAL_ERROR);
+			}
+		} catch (Exception e) {
+			log.error("注册异常：{}", e.getMessage());
+			throw e;
 		}
 	}
 }
