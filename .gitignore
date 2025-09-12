@@ -1,0 +1,22 @@
+# 后端 IDEA 配置
+/backend/.idea/
+/backend/*.iml
+/backend/out/
+
+# Web 端 WebStorm 配置
+/web/.idea/
+/web/*.iml
+/web/node_modules/
+/web/dist/
+
+# 移动端 Android Studio/Flutter 配置
+/mobile/.idea/
+/mobile/*.iml
+/mobile/build/
+/mobile/.flutter-plugins
+/mobile/.pub/
+/mobile/android/.gradle/
+/mobile/android/app/build/
+
+# 通用忽略
+*.log
