@@ -31,7 +31,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new SaInterceptor(h -> {
 			log.info("Sa-Token 拦截器");
-			SaRouter.match("/**").notMatch("/sys/login", "/sys/register")
+			SaRouter.match("/**").notMatch("/aut/user/login", "/aut/user/register")
 					.check(r -> StpUtil.checkLogin());
 
 			// 用户权限
