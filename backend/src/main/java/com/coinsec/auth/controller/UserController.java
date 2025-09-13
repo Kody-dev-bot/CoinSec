@@ -2,22 +2,18 @@ package com.coinsec.auth.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.stp.StpUtil;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
 import com.coinsec.auth.dto.request.LoginRequest;
 import com.coinsec.auth.dto.response.LoginResponse;
 import com.coinsec.auth.entity.User;
 import com.coinsec.auth.service.UserService;
 import com.coinsec.common.result.Result;
 import com.coinsec.common.result.ResultCode;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -95,6 +91,19 @@ public class UserController {
 			}
 		} catch (Exception e) {
 			log.error("注册异常：{}", e.getMessage());
+			throw e;
+		}
+	}
+
+	@Operation(summary = "用户登出", description = "用户登出系统")
+	@GetMapping("/logout")
+	public Result<Void> logout() {
+		try {
+			StpUtil.checkLogin();
+			StpUtil.logout();
+			return Result.success();
+		} catch (Exception e) {
+			log.error("用户未登录：{}", e.getMessage());
 			throw e;
 		}
 	}

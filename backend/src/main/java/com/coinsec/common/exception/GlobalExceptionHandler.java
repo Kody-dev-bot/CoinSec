@@ -1,5 +1,6 @@
 package com.coinsec.common.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
 import com.coinsec.common.result.Result;
 import com.coinsec.common.result.ResultCode;
 import lombok.extern.log4j.Log4j2;
@@ -58,6 +59,12 @@ public class GlobalExceptionHandler {
 	public Result<Void> handleNoHandlerFoundException(NoHandlerFoundException e) {
 		log.error("接口不存在：{}", e.getRequestURL());
 		return Result.fail(ResultCode.NOT_FOUND);
+	}
+
+	@ExceptionHandler(NotLoginException.class)
+	public Result<Void> handleNotLoginException(NotLoginException e) {
+		log.error("未登录异常：{}", e.getMessage());
+		return Result.fail(ResultCode.NOT_LOGIN);
 	}
 
 	/**

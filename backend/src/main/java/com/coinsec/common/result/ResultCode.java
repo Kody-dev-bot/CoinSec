@@ -24,6 +24,7 @@ public enum ResultCode {
 	// 服务器错误
 	SYSTEM_ERROR(500, "系统异常，请稍后重试"),
 	INTERNAL_ERROR(500, "服务器内部错误"),
+	NOT_LOGIN(501, "用户未登录"),
 	// 业务逻辑错误（记账相关）
 	AMOUNT_NOT_FOUND(601, "未找到金额信息，请包含类似“50元”的表述"),
 	TYPE_NOT_CLEAR(602, "未明确收支类型，请包含“花了”或“收入”等表述"),
