@@ -1,6 +1,10 @@
 package com.coinsec.auth.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.stp.StpUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import com.coinsec.auth.dto.request.LoginRequest;
 import com.coinsec.auth.dto.response.LoginResponse;
 import com.coinsec.auth.entity.User;
@@ -27,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RestController
 @RequestMapping("/auth/user")
+@Tag(name = "用户管理", description = "登录、注册等用户相关接口")
 public class UserController {
 
 	/**
@@ -50,6 +55,8 @@ public class UserController {
 	 * @param request 登录请求
 	 * @return 登录用户
 	 */
+	@Operation(summary = "用户登录", description = "通过用户名和密码登录系统，返回Token")
+	@SaIgnore
 	@PostMapping("/login")
 	public Result<LoginResponse> login(@RequestBody LoginRequest request) {
 		try {
@@ -76,6 +83,8 @@ public class UserController {
 	 * @param request 注册请求
 	 * @return 注册结果
 	 */
+	@Operation(summary = "用户注册", description = "通过用户名和密码注册用户")
+	@SaIgnore
 	@PostMapping("/register")
 	public Result<Void> register(@RequestBody LoginRequest request) {
 		try {

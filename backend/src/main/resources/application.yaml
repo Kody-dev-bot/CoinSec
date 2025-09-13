@@ -3,6 +3,8 @@ spring:
     name: Coinsec
   profiles:
     active: dev
+  main:
+    allow-bean-definition-overriding: true
 
 mybatis-plus:
   mapper-locations: classpath*:xml/*Xml.xml

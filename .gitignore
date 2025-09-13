@@ -20,3 +20,4 @@
 
 # 通用忽略
 *.log
+backend/coinsec.session.sql
